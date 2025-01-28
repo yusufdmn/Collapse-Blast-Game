@@ -1,0 +1,45 @@
+{
+    "name": "BoardInputActions",
+    "maps": [
+        {
+            "name": "BoardActionMap",
+            "id": "0a987018-a373-4a0d-962e-a722276ac21a",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "e0a17a4f-4c42-4549-b24b-da0b42f267a3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2975c883-6c3a-4103-9b64-6e45c1243a40",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e61750b0-0b00-4f40-92e3-71c1b9fc7b46",
+                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
