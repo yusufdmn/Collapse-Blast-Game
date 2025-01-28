@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Settings
+namespace Data
 {
     [CreateAssetMenu(fileName = "Blocks", menuName = "Settings/Block Tiles")]
-    public class BlockTiles: ScriptableObject
+    public class BlockTilesSO: ScriptableObject
     {
         public TileBase[] Tiles;
     }
