@@ -1,12 +1,17 @@
 using Settings;
-using UnityEngine;
+using Random = System.Random;
 
 public class BoardData
 {
+    public delegate void GridGenerateDelegate();
+    public event GridGenerateDelegate GridGenerated;
+    
     private readonly int[,] _grid; // to store the grid state
     private readonly int _rows;
     private readonly int _columns;
     private readonly int _totalTileTypes;
+    
+    public int[,] Grid() => _grid;
 
     public BoardData(LevelSettings levelSettings)
     {
@@ -18,15 +23,17 @@ public class BoardData
 
     public void GenerateFullGrid()
     {
+        Random random = new Random();
         for (int row = 0; row < _rows; row++)
         {
             for (int col = 0; col < _columns; col++)
             {
-                _grid[row, col] = Random.Range(0, _totalTileTypes);
+                _grid[row, col] = random.Next(0, _totalTileTypes);
             }
         }
+        GridGenerated?.Invoke();
     }
-
+    
     public void ClearCell(int row, int col)
     {
         _grid[row, col] = -1; // -1 to indicate an empty cell
@@ -37,13 +44,4 @@ public class BoardData
         _grid[row, col] = tileIndex;
     }
 
-    public int GetCell(int row, int col)
-    {
-        return _grid[row, col];
-    }
-
-    public int[,] GetGrid()
-    {
-        return _grid;
-    }
 }
