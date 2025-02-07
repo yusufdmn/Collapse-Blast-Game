@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BaseComponents;
 using Data;
 using Settings;
 using UnityEngine;
@@ -8,27 +9,30 @@ namespace Features
 {
     public class IconUpdater
     {
+        public delegate void IconUpdateEndedDelegate();
+        public event IconUpdateEndedDelegate IconUpdateEnded;
+        
         #region Fields
         
         private readonly BlockTilesSO _blockTilesSoA;
         private readonly BlockTilesSO _blockTilesSoB;
         private readonly BlockTilesSO _blockTilesSoC;
     
-        private readonly Tilemap _tilemap;
+        private readonly TilemapController _tilemapController;
         private int[] _groupBlockTypes = new int[3]; // pre-allocated array with initial size of arbitrary 3
         private readonly int A, B, C;
 
         #endregion
         
-        public IconUpdater (BlockTileStorage blockTileStorage, LevelSettings levelSettings, Tilemap tilemap)
+        public IconUpdater (BlockTileStorageSO blockTileStorageSo, LevelSettings levelSettings, TilemapController tilemapController)
         {
-            _blockTilesSoA = blockTileStorage.BlockTilesSoA;
-            _blockTilesSoB = blockTileStorage.BlockTilesSoB;
-            _blockTilesSoC = blockTileStorage.BlockTilesSoC;
+            _blockTilesSoA = blockTileStorageSo.BlockTilesSoA;
+            _blockTilesSoB = blockTileStorageSo.BlockTilesSoB;
+            _blockTilesSoC = blockTileStorageSo.BlockTilesSoC;
             A = levelSettings.A;
             B = levelSettings.B;
             C = levelSettings.C;
-            _tilemap = tilemap;
+            _tilemapController = tilemapController;
         }
 
         #region Public API
@@ -46,6 +50,7 @@ namespace Features
                 else if(allGroups[i].Count > A)
                     UpdateGroupIcons(allGroups[i], _blockTilesSoA.Tiles, _groupBlockTypes[i]);
             }
+            IconUpdateEnded?.Invoke();
         }
         #endregion
     
@@ -73,7 +78,7 @@ namespace Features
             foreach (var tile in group)
             {
                 var tilePosition = new Vector3Int(tile.x, tile.y, 0);
-                _tilemap.SetTile(tilePosition, tiles[blockType]);
+                _tilemapController.SetTile(tilePosition, tiles[blockType]);
             }
         }
         
