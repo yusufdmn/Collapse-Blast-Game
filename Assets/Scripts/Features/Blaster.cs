@@ -39,13 +39,31 @@ namespace Features
             // blast the target group from the grid
             foreach (var tile in targetGroup)
             {
-                _tilemapController.SetTile(new Vector3Int(tile.x, tile.y, 0), null);
+                _tilemapController.ClearTile(tile);
             }
         }
     
         #endregion
         
         #region Private Methods
+
+        public bool CanBlast(List<List<Vector2Int>> allGroups, Vector3 clickWorldPosition)
+        {
+            Vector3Int cellPosition = _tilemapController.WorldToCell(clickWorldPosition);
+
+            if (!IsInBounds(cellPosition)) // check if the click is within the grid bounds
+                return false;
+        
+            // find the group that contains the target block
+            Vector2Int targetTile = new Vector2Int(cellPosition.x, cellPosition.y); 
+            List<Vector2Int> targetGroup = _targetGroupFinder.GetTargetGroup(allGroups, targetTile);  
+        
+            // if the target block is not in any group, don't blast anything
+            if (targetGroup == null) 
+                return false;
+
+            return true;
+        }
         
         private bool IsInBounds(Vector3Int cellPosition) // check if the click is within the grid bounds
         {
