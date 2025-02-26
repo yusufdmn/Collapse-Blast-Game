@@ -1,2 +1,2 @@
 # Collapse-Blast-Game-
-Good Job Games Case Study
+Match3 puzzle game mechanics.
